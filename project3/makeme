@@ -1,0 +1,34 @@
+gcc public01.c machine.c -o public01.x
+gcc public02.c machine.c -o public02.x
+gcc public03.c machine.c -o public03.x
+gcc public04.c machine.c -o public04.x
+gcc public05.c machine.c -o public05.x
+gcc public06.c machine.c -o public06.x
+gcc public07.c machine.c -o public07.x
+gcc public08.c machine.c -o public08.x
+gcc public09.c machine.c -o public09.x
+gcc public10.c machine.c -o public10.x
+
+
+./public01.x > public01.o
+./public02.x > public02.o
+./public03.x > public03.o
+./public04.x > public04.o
+./public05.x > public05.o
+./public06.x > public06.o
+./public07.x > public07.o
+./public08.x > public08.o
+./public09.x > public09.o
+./public10.x > public10.o
+
+
+diff public01.o public01.output
+diff public02.o public02.output
+diff public03.o public03.output
+diff public04.o public04.output
+diff public05.o public05.output
+diff public06.o public06.output
+diff public07.o public07.output
+diff public08.o public08.output
+diff public09.o public09.output
+diff public10.o public10.output

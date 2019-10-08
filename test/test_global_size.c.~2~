@@ -1,0 +1,11 @@
+#include <stdio.h>
+
+#define P 5
+
+int main(){
+  printf("%d\n", (int) sizeof(unsigned short));
+  printf("%d\n", (int) sizeof(P));
+
+  return 0;
+
+}

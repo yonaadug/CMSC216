@@ -1,0 +1,14 @@
+#!/bin/bash
+
+read -p 'What file do you want to compile with public tests? ' studentfile
+
+shift
+for file in ./*
+do
+
+    if [[ $file =~ ^public\d\d\.c$ ]]; then
+	echo $file
+    fi
+    
+    
+done

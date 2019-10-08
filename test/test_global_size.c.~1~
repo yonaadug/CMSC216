@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+#define P 5
+
+int main(){
+  printf("%d", (int) sizeof(P));
+
+  return 0;
+
+}

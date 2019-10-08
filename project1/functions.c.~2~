@@ -1,0 +1,57 @@
+#include "functions.h"
+
+/* Write your implementations of the functions in this source file.
+ * Skeleton versions of the functions already appear below.
+ */
+
+int sum_of_cubes(int n) {
+
+  int sum;
+  
+  if (n >= 0) {
+    sum = n * n * (n + 1) * (n + 1) / 4;
+  } else {
+    sum = -1;
+  }
+
+  return sum;
+}
+
+int quadrant(int x, int y) {
+
+  int quadrant;
+
+  if (x == 0 || y == 0){
+    
+    quadrant = -1;
+    
+  } else if (x > 0) {
+
+    if (y > 0) {
+      quadrant = 1;
+    } else {
+      quadrant = 4;
+    }
+
+  } else {
+
+    if (y > 0) {
+      quadrant = 2;
+    } else {
+      quadrant = 3;
+    }
+
+  }
+
+  return quadrant;
+}
+
+int num_occurrences_of_digit(long num, int digit) {
+
+  if (digit > 9 || digit < 0) {
+    return -1;
+  }
+
+  
+  return 98765;
+}
