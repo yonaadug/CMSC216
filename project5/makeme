@@ -1,0 +1,26 @@
+gcc student.c public01.c -o public01.x
+gcc student.c public02.c -o public02.x
+gcc student.c public03.c -o public03.x
+gcc student.c public04.c -o public04.x
+gcc student.c public05.c -o public05.x
+gcc student.c public06.c -o public06.x
+gcc student.c public07.c -o public07.x
+gcc student.c public08.c -o public08.x
+gcc student.c public09.c -o public09.x
+gcc student.c public10.c -o public10.x
+gcc student.c public11.c -o public11.x
+gcc student.c public12.c -o public12.x
+gcc student.c public13.c -o public13.x
+./public01.x
+./public02.x
+./public03.x
+./public04.x
+./public05.x
+./public06.x
+./public07.x
+./public08.x
+./public09.x
+./public10.x
+./public11.x
+./public12.x
+./public13.x
