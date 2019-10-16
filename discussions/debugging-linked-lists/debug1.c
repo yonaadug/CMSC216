@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+  struct node *next;
+  int data;
+} Node;
+
+/* create a list with three nodes with values 10, 20, 30, and 40 */
+void create_test_list(Node **head) {
+  *head= malloc(sizeof(Node));
+  if (*head == NULL)
+    exit(-1);
+  (*head)->data= 10;
+
+  (*head)->next= malloc(sizeof(Node));
+  if ((*head)->next == NULL)
+    exit(-1);
+  (*head)->next->data= 20;
+
+  (*head)->next->next= malloc(sizeof(Node));
+  if ((*head)->next->next == NULL)
+    exit(-1);
+  (*head)->next->next->data= 30;
+
+  (*head)->next->next->next= malloc(sizeof(Node));
+  if ((*head)->next->next->next == NULL)
+    exit(-1);
+  (*head)->next->next->next->next= NULL;
+  (*head)->next->next->next->data= 40;
+
+}
+
+void search(Node *current, int value) {
+  while (1)
+    if (current->data == value) {
+      printf("A node with value %d is in the list.\n", value);
+      break;
+    } else
+      if (current == NULL) {
+        printf("The value %d is not in the list.\n", value);
+        break;
+      } else current= current->next;
+}
+
+int main(void) {
+  Node *root;
+
+  /* create a small list */
+  create_test_list(&root);
+
+  /* now try searching for some values in the list */
+  search(root, 20);
+  search(root, 30);
+  search(root, 40);
+  search(root, 30);
+  search(root, 20);
+
+  return 0;
+}

@@ -1,3 +1,10 @@
+# Yonathan Kebede
+# TerpID: ykebed12
+# UID: 115659780
+#
+# I pledge on my honor that I have not given or recieved
+# any unauthorized assistance on this assignment.
+
 CC = gcc
 CFLAGS = -ansi -pedantic-errors -Wall -fstack-protector-all -Werror -Wshadow
 
@@ -35,7 +42,7 @@ array-sum.o: array-sum.c array-sum.h
 
 row-sum.o: row-sum.c row-sum.h
 	$(CC) $(CFLAGS) -c row-sum.c
-	
+
 clean:
 	rm -f *.x *.o
 
