@@ -186,9 +186,8 @@ int mkdir(Unix *filesystem, const char arg[]) {
        errors*/
     if (filesystem != NULL && arg != NULL &&
         find_data(arg, filesystem->curr_dir) == NULL &&
-        strcmp(".", arg) && strcmp("..", arg) &&
-        strcmp("/", arg) && strcmp("", arg) &&
-        !(strchr(arg, '/') != NULL && strlen(arg) > 1)) {
+        strcmp(arg, ".") && strcmp(arg, "..") &&
+        strchr(arg, '/') == NULL && strcmp(arg, "")) {
         
         /*Allocate data for the new folder*/
         new_folder = malloc(sizeof(Data));
@@ -220,7 +219,8 @@ int cd(Unix *filesystem, const char arg[]) {
 
     /* Make sure inputs do not result in an error
        according to project description */
-    if (filesystem != NULL && arg != NULL) {
+    if (filesystem != NULL && arg != NULL && 
+        !(strchr(arg, '/') != NULL && strlen(arg) > 1)) {
 
         curr_dir = filesystem->curr_dir;
         

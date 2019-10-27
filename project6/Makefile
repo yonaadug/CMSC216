@@ -46,8 +46,3 @@ row-sum.o: row-sum.c row-sum.h
 clean:
 	rm -f *.x *.o
 
-
-
-
-
-
