@@ -264,7 +264,8 @@ int ls(Unix *filesystem, const char arg[]) {
     Data *curr_dir, *found_data;
 
     /* Check if input paramenters are null */
-    if (filesystem != NULL && arg != NULL) {
+    if (filesystem != NULL && arg != NULL &&
+        !(strchr(arg, '/') != NULL && strlen(arg) > 1)) {
 
         curr_dir = filesystem->curr_dir;
         
