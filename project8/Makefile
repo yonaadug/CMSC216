@@ -34,7 +34,7 @@ public09.x: public09.o unix.o
 public10.x: public10.o unix.o driver.o
 	$(CC) public10.o unix.o driver.o -o public10.x
 
-unix.o: unix.c unix.h
+unix.o: unix.c unix.h unix-datastructure.h
 	$(CC) $(CFLAGS) -c unix.c
 
 public01.o: public01.c unix.h
@@ -68,4 +68,4 @@ public10.o: public10.c unix.h driver.h
 	$(CC) $(CFLAGS) -c public10.c
 
 clean:
-	rm -f rm -f public*.x public*.o unix.o
+	rm -f public*.x public*.o unix.o
