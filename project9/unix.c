@@ -405,8 +405,7 @@ void rmfs(Unix *filesystem) {
         /*free memory used by the root and filesystem */
         free(root->name);
         free(root);
-        free(filesystem->root);
-        free(filesystem->curr_dir);
+        free(filesystem);
     }
 }
 
