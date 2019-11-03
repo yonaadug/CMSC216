@@ -341,12 +341,17 @@ void pwd(Unix *filesystem) {
     
     if (filesystem != NULL) {
 
-        /*print root "/" first */
-        printf("/");
-        /* call to the pwd_helper to print from root*/
-        pwd_helper(filesystem->curr_dir, filesystem->root);
-        /* print new line after working directory is printed*/
-        printf("\n");
+        /* check if current directory is the root*/
+        if (filesystem->root != filesystem->curr_dir) {
+            /* call to the pwd_helper to print from root*/
+            pwd_helper(filesystem->curr_dir, filesystem->root);
+            /* print new line after working directory is printed*/
+            printf("\n");
+        } else {
+            /* if current directory is root,
+               just print / with new line */
+            printf("/\n");
+        }
 
     }
 }
@@ -397,9 +402,11 @@ void rmfs(Unix *filesystem) {
         /* This frees any memory with the root */
         rmfs_helper(root);
 
-        /*free memory used by the root*/
+        /*free memory used by the root and filesystem */
         free(root->name);
         free(root);
+        free(filesystem->root);
+        free(filesystem->curr_dir);
     }
 }
 
