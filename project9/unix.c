@@ -405,7 +405,7 @@ void rmfs(Unix *filesystem) {
         /*free memory used by the root and filesystem */
         free(root->name);
         free(root);
-        free(filesystem);
+        
     }
 }
 
@@ -451,7 +451,6 @@ int rm(Unix *filesystem, const char arg[]) {
                 rmfs_helper(child);
             }
 
-            free(child->child);
             free(child->name);
             free(child);
 
