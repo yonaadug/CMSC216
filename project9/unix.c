@@ -418,7 +418,7 @@ int rm(Unix *filesystem, const char arg[]) {
     if (filesystem != NULL && arg != NULL && strcmp (arg, ".") &&
         strcmp(arg, "..") && strchr(arg, '/') == NULL && strcmp(arg, "") ) {
         
-        child = filesystem->curr_dir;
+        child = filesystem->curr_dir->child;
 
         /* Loop to find the child, while keeping track of 
            the previous element*/
