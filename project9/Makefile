@@ -29,7 +29,7 @@ public08.x: public08.o unix.o
 	$(CC) public08.o unix.o -o public08.x
 
 public09.x: public09.o unix.o driver.o
-	$(CC) public09.o unix.o -o public09.x
+	$(CC) public09.o unix.o driver.o -o public09.x
 
 public10.x: public10.o unix.o driver.o
 	$(CC) public10.o unix.o driver.o -o public10.x
