@@ -375,7 +375,7 @@ void rmfs_helper(Data *curr_dir) {
             /* If the child is a directory, delete recursively
             of its contents */
             if (child->data_type == folder) {
-                rmfs_helper(child->child);
+                rmfs_helper(child);
             }
 
             /* free the name and child */
