@@ -341,6 +341,8 @@ void pwd(Unix *filesystem) {
     
     if (filesystem != NULL) {
 
+        /*print root "/" first */
+        printf("/");
         /* call to the pwd_helper to print from root*/
         pwd_helper(filesystem->curr_dir, filesystem->root);
         /* print new line after working directory is printed*/
@@ -353,8 +355,11 @@ void pwd(Unix *filesystem) {
    files recursively */
 void rmfs_helper(Data *curr_dir) {
 
+    Data *child, *next_child;
+
     if (curr_dir != NULL) {
-        Data *child = curr_dir->child, *next_child;
+        
+        child = curr_dir->child;
 
         /* Loop through each file/folder within the current
         directory */
