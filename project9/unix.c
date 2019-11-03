@@ -353,26 +353,28 @@ void pwd(Unix *filesystem) {
    files recursively */
 void rmfs_helper(Data *curr_dir) {
 
-    Data *child = curr_dir->child, *next_child;
+    if (curr_dir != NULL) {
+        Data *child = curr_dir->child, *next_child;
 
-    /* Loop through each file/folder within the current
-       directory */
-    while (child != NULL) {
+        /* Loop through each file/folder within the current
+        directory */
+        while (child != NULL) {
 
-        next_child = child->next;
+            next_child = child->next;
 
-        /* If the child is a directory, delete recursively
-           of its contents */
-        if (child->data_type == folder) {
-            rmfs_helper(child->child);
+            /* If the child is a directory, delete recursively
+            of its contents */
+            if (child->data_type == folder) {
+                rmfs_helper(child->child);
+            }
+
+            /* free the name and child */
+            free(child->name);
+            free(child);
+
+            /* reassign child the next element */
+            child = next_child;
         }
-
-        /* free the name and child */
-        free(child->name);
-        free(child);
-
-        /* reassign child the next element */
-        child = next_child;
     }
 
 }
