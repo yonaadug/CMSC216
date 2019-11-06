@@ -7,7 +7,7 @@
  * 
  * This file contains functions for a unix filesystem simulation
  * in continuation from project 8. The functions created are, pwd,
- * ls, touch, cd, mkdir. 
+ * ls, touch, cd, mkdir, rmfs, rm. 
  */
 
 #include "unix.h"
