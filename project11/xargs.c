@@ -17,7 +17,8 @@
 int main (int argc, char *argv[]) {
 
     int pid;
-    /*char *line;*/
+    char *line;
+    size_t line_size = 1000;
     
 
     pid = fork();
@@ -48,7 +49,9 @@ int main (int argc, char *argv[]) {
 
         } else {
             /* Standard mode with no target-program */
-            execl("/bin/echo","/bin/echo",NULL);
+            line = malloc(sizeof(char) * 1000);
+            fgets (line, line_size-1, stdin);
+            execlp("echo", "echo", split(line), NULL);
 
 
 
@@ -60,8 +63,7 @@ int main (int argc, char *argv[]) {
         /*Parent*/
 
 
-
-
+        exit(0);
 
     }
 
