@@ -19,9 +19,9 @@ void read_input (char *input);
 
 int main (int argc, char *argv[]) {
 
-    int pid, line_pid, index = 0;
-    char c, *line, **file_args;
-    size_t arr_size;
+    int pid, line_pid;
+    char *line, **file_args;
+    /*size_t arr_size;*/
 
     
     
@@ -49,7 +49,7 @@ int main (int argc, char *argv[]) {
                 file_args = split(line);
             }
             
-            execlp(argv[2], (argv + 2), file_args, NULL);
+            execv(argv[2], (argv + 2), file_args, NULL);
             
 
 
@@ -63,7 +63,7 @@ int main (int argc, char *argv[]) {
                 file_args = split(line);
             }
             
-            execlp("echo", "echo", file_args, NULL);
+            execv("echo", "echo", file_args, NULL);
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
@@ -72,14 +72,14 @@ int main (int argc, char *argv[]) {
 
             read_input(line)
             file_args = split(line);
-            execlp(argv[1], (argv + 1), line, NULL);
+            execv(argv[1], (argv + 1), line, NULL);
             
         } else {
             /* Standard mode with no target-program */
 
             read_input(line);
             file_args = split(line);            
-            execlp("echo", "echo", file_args, NULL);
+            execv("echo", "echo", file_args, NULL);
 
         }
 
