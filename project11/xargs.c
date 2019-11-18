@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 char read_line (char *line);
-char read_input (char *input);
+void read_input (char *input);
 
 int main (int argc, char *argv[]) {
 
