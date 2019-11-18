@@ -51,7 +51,7 @@ int main (int argc, char *argv[]) {
             /* Standard mode with no target-program */
             line = malloc(sizeof(char) * 1000);
             fgets (line, line_size-1, stdin);
-            execlp("echo", "echo", split(line), NULL);
+            execlp("echo", "echo", line, NULL);
 
 
 
