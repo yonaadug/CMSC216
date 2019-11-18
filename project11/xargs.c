@@ -14,14 +14,20 @@
 #include <string.h>
 #include <stdlib.h>
 
+char read_line (char *line);
+char read_input (char *input);
+
 int main (int argc, char *argv[]) {
 
-    int pid;
-    char *line;
-    size_t line_size = 1000;
-    
+    int pid, line_pid, index = 0;
+    char c, *line, **file_args;
+    size_t arr_size;
 
-    pid = fork();
+    
+    
+    line = malloc(sizeof(char) * 1000);
+
+    pid = safe_fork();
 
     /* if fork unsuccessful, exit program */
     if (pid < 0) {
@@ -31,36 +37,57 @@ int main (int argc, char *argv[]) {
 
     if (pid == 0) { 
         /*Child process*/
-
+        
 
         if (argc > 2 && !strcmp(argv[1], "-i") ) {
             /* Run one line at a time mode with target-program and 
-               target-args */
+            target-args */
+
+            while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
+                wait();
+                free(file_args);
+                file_args = split(line);
+            }
+            
+            execlp(argv[2], (argv + 2), file_args, NULL);
+            
+
 
         } else if (argc == 2 && !strcmp(argv[1], "-i")) {
             /* Run one line at a time mode with without 
-               target-program */
+            target-program */
+
+            while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
+                wait();
+                free(file_args);
+                file_args = split(line);
+            }
+            
+            execlp("echo", "echo", file_args, NULL);
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
             /* Standard mode and just target-program with 
-               target=args*/
+            target=args */
 
-
+            read_input(line)
+            file_args = split(line);
+            execlp(argv[1], (argv + 1), line, NULL);
+            
         } else {
             /* Standard mode with no target-program */
-            line = malloc(sizeof(char) * 1000);
-            fgets (line, line_size-1, stdin);
-            execlp("echo", "echo", line, NULL);
 
-
+            read_input(line);
+            file_args = split(line);            
+            execlp("echo", "echo", file_args, NULL);
 
         }
 
-
-
     } else {
         /*Parent*/
+        wait();
+        free(line);
+        free(file_args);
 
 
         exit(0);
@@ -68,4 +95,35 @@ int main (int argc, char *argv[]) {
     }
 
     return 0;
+}
+
+char read_line (char *line) {
+
+    int index = 0;
+    char c;
+
+    while ((c = getchar()) != '\n' && c != EOF) {
+        line[index] = c;
+        index += 1;
+    }
+
+    line[index-1] = '\0';
+
+    return c;
+}
+
+void read_input (char *input) {
+    char c;
+    int index = 0;
+
+    while ((c = getchar()) != EOF) {
+
+        if (c == '\n') {
+            c = ' ';
+        }
+        input[index] = c;
+        index += 1;
+    }
+
+    input[index-1] = '\0';
 }
