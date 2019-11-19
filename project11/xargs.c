@@ -20,7 +20,7 @@ void merge_arr (char **first_arr, char **second_arr, int size);
 
 int main (int argc, char **argv) {
 
-    int pid, line_pid, i, size;
+    int pid, line_pid = -1, i, size;
     char *line, *temp, **file_args, **file_args2;
     int const MAX_LEN = 1000;
     /*size_t arr_size;*/
@@ -45,14 +45,19 @@ int main (int argc, char **argv) {
             /* Run one line at a time mode with target-program and 
             target-args */
 
-            while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
-                wait();
-                free(file_args);
-                free_file_args(file_args2);
+            while (read_line(line) != EOF && line_pid != 0) {
+
+                if (getpid() == line_pid) {
+                    wait();
+                    free(file_args);
+                    free_file_args(file_args2);
+                }
+                
                 
                 /*free section after argv in file_args*/
                 file_args2 = split(line);
                 file_args = merge_arr(argv + 2, file_args2, argc-2);
+                line_pid = safe_fork();
             }
             
             execv(argv[2], file_args);
@@ -63,21 +68,24 @@ int main (int argc, char **argv) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
+            while (read_line(line) != EOF && line_pid != 0) {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
-                wait(); 
+                if (line_pid == getpid()) {
+                    wait(); 
 
-                /* free memory from the file_args and temp 
-                 from parent */
-                free_file_args(file_args);
-                free(temp);
+                    /* free memory from the file_args and temp 
+                    from parent */
+                    free_file_args(file_args);
+                    free(temp);
+                }
 
                 temp = malloc(sizeof(char) * 11);
                 strcpy(temp, "/bin/echo ");
                 
                 file_args = merge_arr(&temp, split(line), 1);
+                line_pid = safe_fork();
             }
             
             execv(file_args[0], file_args);
@@ -182,14 +190,9 @@ void free_file_args(char **file_args) {
     /*Variable holds number of elements in file_args*/
     int size = sizeof(file_args) / sizeof(file_args[0]); 
     /*Variable of size used to free the elements*/
-    for (i = 0; i < size); i++) {
+    for (i = 0; i < size; i++) {
         free(file_args[i]);
     }
 
     free(file_args);
-
-}
-
-void free_section() {
-
 }
