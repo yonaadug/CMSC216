@@ -100,7 +100,7 @@ int main (int argc, char *argv[]) {
             file_args2 = split(line);
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
 	    
-            execv(file_args[0], arv+1, file_args2);
+            execv(file_args[0], file_args);
             
         } else {
             /* Standard mode with no target-program */
@@ -208,10 +208,11 @@ void free_file_args(char **file_args) {
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char *arr[]) {
-  /*int i = 0;
+    /*int i = 0;
     while (arr + i != NULL) {
         i++;
     }
     return i+1;*/
-  return (sizeof(arr)/sizeof(char *));
+    printf("%d, %d", (int) sizeof(arr), (int) sizeof(char *));
+    return (sizeof(arr) / sizeof(char *));
 }
