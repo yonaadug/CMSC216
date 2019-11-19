@@ -100,7 +100,7 @@ int main (int argc, char *argv[]) {
             file_args2 = split(line);
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
 	    
-            execv(file_args[0], file_args);
+            execv(file_args[0], arv+1, file_args2);
             
         } else {
             /* Standard mode with no target-program */
