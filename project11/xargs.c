@@ -214,7 +214,7 @@ int count_size(char *arr[]) {
         i++;
     }
 
-    printf("zz %d zz",sizeof(char *));
+    printf("zz %d zz", (int)sizeof(arr));
     return i+1;
     
 }
