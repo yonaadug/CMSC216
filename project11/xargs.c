@@ -176,11 +176,10 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
     int index,
         size_second = count_size(second_arr),
         new_size = sizeof(char *) * (size_first + size_second);
-    
-    printf("%d", size_second);
-    
-    
+   
     char **merged_arr = malloc(new_size);
+
+    printf("%d", size_second);
 
     for (index = 0; index < size_first; index++) {
         merged_arr[index] = first_arr[index];
