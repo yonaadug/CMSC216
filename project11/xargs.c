@@ -213,5 +213,5 @@ int count_size(char *arr[]) {
         i++;
     }
     return i+1;*/
-  return (sizeof(arr)/sizeof(*char));
+  return (sizeof(arr)/sizeof(char *));
 }
