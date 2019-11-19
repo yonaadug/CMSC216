@@ -16,16 +16,13 @@
 
 char read_line (char *line);
 void read_input (char *input);
-void merge_arr (char **first_arr, char **second_arr, int size);
+char ** merge_arr (char **first_arr, char **second_arr, int size);
+void free_file_args (char **file_args);
 
 int main (int argc, char **argv) {
 
-    int pid, line_pid = -1, i, size;
-    char *line, *temp, **file_args, **file_args2;
-    int const MAX_LEN = 1000;
-    /*size_t arr_size;*/
-
-    
+    int pid, line_pid = -1;
+    char *line, *temp, **file_args, **file_args2;    
     
     line = malloc(sizeof(char) * 1000);
 
@@ -48,7 +45,7 @@ int main (int argc, char **argv) {
             while (read_line(line) != EOF && line_pid != 0) {
 
                 if (getpid() == line_pid) {
-                    wait();
+                    wait(NULL);
                     free(file_args);
                     free_file_args(file_args2);
                 }
@@ -73,7 +70,7 @@ int main (int argc, char **argv) {
                 in the loop */
 
                 if (line_pid == getpid()) {
-                    wait(); 
+                    wait(NULL); 
 
                     /* free memory from the file_args and temp 
                     from parent */
@@ -168,7 +165,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 
     int index,
         size_second = sizeof(second_arr) / sizeof(second_arr[0]),
-        new_size = (sizeof(*char) * size_first + sizeof(second_arr));
+        new_size = (sizeof(char *) * size_first + sizeof(second_arr));
     
     char **merged_arr = malloc(new_size);
 
@@ -187,8 +184,9 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 /*Frees every element in file_args and also file_args*/
 void free_file_args(char **file_args) {
 
+
     /*Variable holds number of elements in file_args*/
-    int size = sizeof(file_args) / sizeof(file_args[0]); 
+    int size = sizeof(file_args) / sizeof(file_args[0]), i; 
     /*Variable of size used to free the elements*/
     for (i = 0; i < size; i++) {
         free(file_args[i]);
