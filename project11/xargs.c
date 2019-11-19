@@ -179,7 +179,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
    
     char **merged_arr = malloc(new_size);
 
-    printf("%d",size_second);
+    printf("zzz%d",size_second);
 
     for (index = 0; index < size_first; index++) {
         merged_arr[index] = first_arr[index];
