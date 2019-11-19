@@ -97,7 +97,9 @@ int main (int argc, char *argv[]) {
             possible target_args */
 
             read_input(line);
-            file_args = merge_arr(argv + 1, split(line), argc - 1);
+            file_args2 = split(line)
+            file_args = merge_arr(argv + 1, file_args2, argc - 1);
+            printf("%s",file_args[0]);
 
             execv(file_args[0], file_args);
             
@@ -174,7 +176,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 
     int index,
         size_second = count_size(second_arr),
-        new_size = (sizeof(char *) * (size_first + size_second) );
+        new_size = sizeof(char *) * (size_first + size_second);
     
     char **merged_arr = malloc(new_size);
 
