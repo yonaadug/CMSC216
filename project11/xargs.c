@@ -16,11 +16,13 @@
 
 char read_line (char *line);
 void read_input (char *input);
+void merge_arr (char **first_arr, char **second_arr, int size);
 
-int main (int argc, char *argv[]) {
+int main (int argc, char **argv) {
 
-    int pid, line_pid;
-    char *line, **file_args;
+    int pid, line_pid, i, size;
+    char *line, *temp, **file_args, **file_args2;
+    int const MAX_LEN = 1000;
     /*size_t arr_size;*/
 
     
@@ -46,10 +48,14 @@ int main (int argc, char *argv[]) {
             while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
                 wait();
                 free(file_args);
-                file_args = split(line);
+                free_file_args(file_args2);
+                
+                /*free section after argv in file_args*/
+                file_args2 = split(line);
+                file_args = merge_arr(argv + 2, file_args2, argc-2);
             }
             
-            execv(argv[2], (argv + 2), file_args, NULL);
+            execv(argv[2], file_args);
             
 
 
@@ -58,37 +64,59 @@ int main (int argc, char *argv[]) {
             target-program */
 
             while (read_line(line) != EOF && (line_pid = safe_fork()) != 0) {
-                wait();
-                free(file_args);
-                file_args = split(line);
+                /* Read line then fork, then let child exit loop while parent continues
+                in the loop */
+
+                wait(); 
+
+                /* free memory from the file_args and temp 
+                 from parent */
+                free_file_args(file_args);
+                free(temp);
+
+                temp = malloc(sizeof(char) * 11);
+                strcpy(temp, "/bin/echo ");
+                
+                file_args = merge_arr(&temp, split(line), 1);
             }
             
-            execv("echo", "echo", file_args, NULL);
+            execv(file_args[0], file_args);
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
             /* Standard mode and just target-program with 
-            target=args */
+            possible target_args */
 
-            read_input(line)
-            file_args = split(line);
-            execv(argv[1], (argv + 1), line, NULL);
+            read_input(line);
+            file_args = merge_arr(argv + 1, split(line), argc - 1);
+
+            execv(argv[1], file_args);
             
         } else {
             /* Standard mode with no target-program */
 
+
             read_input(line);
-            file_args = split(line);            
-            execv("echo", "echo", file_args, NULL);
+            temp = malloc(sizeof(char) * (strlen(line) + 12));
+            strcpy(temp, "/bin/echo ");
+            strcat(temp, line);
+            
+            file_args = split(temp);
+            
+            execv(file_args[0], file_args);
 
         }
 
     } else {
-        /*Parent*/
-        wait();
-        free(line);
-        free(file_args);
+        /*Parent will be responsible for freeing everthing*/
 
+        /*Wait for all children to free all allocated*/
+        wait();
+
+        /*free literally everything, because 1st ammendment :) */
+        free(line);
+        free(temp);
+        free_file_args(file_args);
 
         exit(0);
 
@@ -97,7 +125,7 @@ int main (int argc, char *argv[]) {
     return 0;
 }
 
-char read_line (char *line) {
+char read_line(char *line) {
 
     int index = 0;
     char c;
@@ -107,23 +135,61 @@ char read_line (char *line) {
         index += 1;
     }
 
-    line[index-1] = '\0';
+    line[index-1] = '\n';
 
     return c;
 }
 
-void read_input (char *input) {
+/**/
+void read_input(char *input) {
     char c;
     int index = 0;
 
     while ((c = getchar()) != EOF) {
-
-        if (c == '\n') {
-            c = ' ';
-        }
         input[index] = c;
         index += 1;
     }
 
     input[index-1] = '\0';
+}
+
+/* Takes two string arrays and takes the elemnts and puts it in one 
+ merged array. The int variable indicates the size of the first
+ array of strings to copy into new array of strings*/
+char **merge_arr(char **first_arr, char **second_arr, int size_first) {
+
+    int index,
+        size_second = sizeof(second_arr) / sizeof(second_arr[0]),
+        new_size = (sizeof(*char) * size_first + sizeof(second_arr));
+    
+    char **merged_arr = malloc(new_size);
+
+    for (index = 0; index < size_first; index++) {
+        merged_arr[index] = first_arr[index];
+    }
+
+    for (index = 0; index < size_second; index++) {
+
+        merged_arr[index + size_first] = second_arr[index];
+    }
+    
+    return merged_arr;
+}
+
+/*Frees every element in file_args and also file_args*/
+void free_file_args(char **file_args) {
+
+    /*Variable holds number of elements in file_args*/
+    int size = sizeof(file_args) / sizeof(file_args[0]); 
+    /*Variable of size used to free the elements*/
+    for (i = 0; i < size); i++) {
+        free(file_args[i]);
+    }
+
+    free(file_args);
+
+}
+
+void free_section() {
+
 }
