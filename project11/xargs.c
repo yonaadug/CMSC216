@@ -209,7 +209,7 @@ void free_file_args(char **file_args) {
 /*Counts size of the array including the NULL at the end*/
 int count_size(char *arr[]) {
     int i = 0;
-    while (arr + i != 0) {
+    while (strcmp(arr[i],"")) {
         i++;
     }
     return i+1;
