@@ -120,7 +120,7 @@ int main (int argc, char *argv[]) {
         /*Parent will be responsible for freeing everthing*/
 
         /*Wait for all children to free all allocated*/
-        wait();
+        wait(NULL);
 
         /*free literally everything, because 1st ammendment :) */
         free(line);
