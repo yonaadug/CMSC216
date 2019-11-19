@@ -98,10 +98,8 @@ int main (int argc, char *argv[]) {
 
             read_input(line);
 
-            if ()
-
             file_args2 = split(line);
-            p
+            
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
 	    
             execv(file_args[0], file_args);
@@ -183,7 +181,6 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
    
     char **merged_arr = malloc(new_size);
 
-    printf("zzz%d",size_second);
 
     for (index = 0; index < size_first; index++) {
         merged_arr[index] = first_arr[index];
