@@ -164,7 +164,7 @@ void read_input(char *input) {
         index += 1;
     }
 
-    
+    input[index] = '\n';
     input[index] = '\0';
 }
 
@@ -178,8 +178,6 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
         new_size = sizeof(char *) * (size_first + size_second);
    
     char **merged_arr = malloc(new_size);
-
-    printf("%d", size_second);
 
     for (index = 0; index < size_first; index++) {
         merged_arr[index] = first_arr[index];
@@ -213,5 +211,5 @@ int count_size(char *arr[]) {
         i++;
     }
     return i+1;*/
-  return sizeof(arr)/sizeof(arr[0]);
+  return (sizeof(arr)/sizeof(*arr));
 }
