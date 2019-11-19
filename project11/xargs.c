@@ -179,6 +179,8 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
    
     char **merged_arr = malloc(new_size);
 
+    printf("%d",size_second);
+
     for (index = 0; index < size_first; index++) {
         merged_arr[index] = first_arr[index];
     }
@@ -206,10 +208,9 @@ void free_file_args(char **file_args) {
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char *arr[]) {
-  /*int i = 0;
+    int i = 0;
     while (arr + i != NULL) {
         i++;
     }
-    return i+1;*/
-  return (sizeof(arr)/sizeof(*arr));
+    return i+1;
 }
