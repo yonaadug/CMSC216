@@ -30,7 +30,7 @@ ls public04.file? | ./xargs.x rm
 
 # now see whether any of them still exist (if so, it's an error)
 if ((-e public04.file1) || (-e public04.file3) || (-e public04.file5) || \
-    (-e public04.file)) then
+    (-e public04.file7)) then
   # error exit
   echo "Problem!  Something didn't work right and some files weren't removed."
   exit -1
