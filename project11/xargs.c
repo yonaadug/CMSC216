@@ -99,7 +99,7 @@ int main (int argc, char *argv[]) {
             read_input(line);
             file_args2 = split(line);
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
-	    printf("%s",file_args[1]);
+	    
             execv(file_args[0], file_args);
             
         } else {
@@ -177,6 +177,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
         size_second = count_size(second_arr),
         new_size = sizeof(char *) * (size_first + size_second);
     
+    
     char **merged_arr = malloc(new_size);
 
     for (index = 0; index < size_first; index++) {
@@ -206,10 +207,9 @@ void free_file_args(char **file_args) {
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char **arr) {
-  /*int i = 0;
+    int i = 0;
     while (arr + i != NULL) {
         i++;
     }
-    return i+1;*/
-  return sizeof(arr)/sizeof(arr[0]);
+    return i+1;
 }
