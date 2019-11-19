@@ -97,9 +97,9 @@ int main (int argc, char *argv[]) {
             possible target_args */
 
             read_input(line);
-            file_args = merge_arr(argv + 1, split(line), argc - 1);
+            file_args = merge_arr(argv + 2, split(line), argc - 2);
 
-            execv(argv[1], file_args);
+            execv(file_args[0], file_args);
             
         } else {
             /* Standard mode with no target-program */
