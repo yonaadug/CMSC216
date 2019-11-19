@@ -97,7 +97,11 @@ int main (int argc, char *argv[]) {
             possible target_args */
 
             read_input(line);
+
+            if ()
+
             file_args2 = split(line);
+            p
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
 	    
             execv(file_args[0], file_args);
@@ -208,11 +212,10 @@ void free_file_args(char **file_args) {
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char *arr[]) {
-    /*int i = 0;
-    while (arr + i != NULL) {
+    int i = 0;
+    while (arr + i*(sizeof(char *)) != NULL) {
         i++;
     }
-    return i+1;*/
-    printf("%d, %d hsda", (int) sizeof(arr), (int) sizeof(char *));
-    return (sizeof(arr) / sizeof(char *));
+    return i+1;
+    
 }
