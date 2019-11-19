@@ -213,6 +213,8 @@ int count_size(char *arr[]) {
     while (arr + i*(sizeof(char *)) != NULL) {
         i++;
     }
+
+    printf("zz %d zz",i);
     return i+1;
     
 }
