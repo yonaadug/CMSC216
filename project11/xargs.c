@@ -213,6 +213,6 @@ int count_size(char *arr[]) {
         i++;
     }
     return i+1;*/
-    printf("%d, %d", (int) sizeof(arr), (int) sizeof(char *));
+    printf("%d, %d hsda", (int) sizeof(arr), (int) sizeof(char *));
     return (sizeof(arr) / sizeof(char *));
 }
