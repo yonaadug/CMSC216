@@ -18,11 +18,12 @@ char read_line (char *line);
 void read_input (char *input);
 char ** merge_arr (char **first_arr, char **second_arr, int size);
 void free_file_args (char **file_args);
+int count_size (char **arr);
 
-int main (int argc, char **argv) {
+int main (int argc, char *argv[]) {
 
     int pid, line_pid = -1;
-    char *line, *temp, **file_args, **file_args2;    
+    char *line, *temp = NULL, **file_args = NULL, **file_args2 = NULL;    
     
     line = malloc(sizeof(char) * 1000);
 
@@ -164,7 +165,7 @@ void read_input(char *input) {
 char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 
     int index,
-        size_second = sizeof(second_arr) / sizeof(second_arr[0]),
+        size_second = count_size(second_arr),
         new_size = (sizeof(char *) * size_first + sizeof(second_arr));
     
     char **merged_arr = malloc(new_size);
@@ -173,8 +174,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
         merged_arr[index] = first_arr[index];
     }
 
-    for (index = 0; index < size_second; index++) {
-
+    for (index = 0; index < size_second; index++) {   
         merged_arr[index + size_first] = second_arr[index];
     }
     
@@ -184,13 +184,22 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 /*Frees every element in file_args and also file_args*/
 void free_file_args(char **file_args) {
 
-
     /*Variable holds number of elements in file_args*/
-    int size = sizeof(file_args) / sizeof(file_args[0]), i; 
+    int i, size = count_size(file_args);
+
     /*Variable of size used to free the elements*/
     for (i = 0; i < size; i++) {
         free(file_args[i]);
     }
 
     free(file_args);
+}
+
+/*Counts size of the array including the NULL at the end*/
+int count_size(char **arr) {
+    int i = 0;
+    while (arr[i] != NULL) {
+        i++;
+    }
+    return i+1;
 }
