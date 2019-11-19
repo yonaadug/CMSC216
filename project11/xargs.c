@@ -26,7 +26,7 @@ int count_size (char **arr);
 int main (int argc, char *argv[]) {
 
     int pid, line_pid = -1;
-    char *line, *temp = NULL, **file_args = NULL, **file_args2 = NULL;    
+    char *line, *temp = NULL, **file_args, **file_args2;    
     
     line = malloc(sizeof(char) * 1000);
 
@@ -208,7 +208,7 @@ void free_file_args(char **file_args) {
 }
 
 /*Counts size of the array including the NULL at the end*/
-int count_size(char *arr[]) {
+int count_size(char **arr) {
     int i = 0;
     while (arr + i*(sizeof(char *)) != NULL) {
         i++;
