@@ -108,7 +108,7 @@ int main (int argc, char *argv[]) {
             read_input(line);
             temp = malloc(sizeof(char) * (strlen(line) + 12));
             strcpy(temp, "/bin/echo ");
-            strcat(temp, line);
+            strncat(temp, line, strlen(line) + 12);
             
             file_args = split(temp);
             
@@ -155,11 +155,16 @@ void read_input(char *input) {
     int index = 0;
 
     while ((c = getchar()) != EOF) {
+        if (c == '\n') {
+	    c = ' ';
+	}
+	    
         input[index] = c;
         index += 1;
     }
 
-    input[index-1] = '\0';
+    
+    input[index] = '\0';
 }
 
 /* Takes two string arrays and takes the elemnts and puts it in one 
@@ -191,7 +196,7 @@ void free_file_args(char **file_args) {
     int i, size = count_size(file_args);
 
     /*Variable of size used to free the elements*/
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < size-1; i++) {
         free(file_args[i]);
     }
 
@@ -200,9 +205,10 @@ void free_file_args(char **file_args) {
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char **arr) {
-    int i = 0;
-    while (arr[i] != NULL) {
+  /*int i = 0;
+    while (arr + i != NULL) {
         i++;
     }
-    return i+1;
+    return i+1;*/
+  return sizeof(arr)/sizeof(arr[0]);
 }
