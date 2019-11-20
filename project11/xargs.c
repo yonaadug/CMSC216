@@ -60,7 +60,7 @@ int main (int argc, char *argv[]) {
                 line_pid = safe_fork();
             }
             
-            execv(argv[2], file_args);
+            execvp(argv[2], file_args);
             
 
 
@@ -88,7 +88,7 @@ int main (int argc, char *argv[]) {
                 line_pid = safe_fork();
             }
             
-            execv(file_args[0], file_args);
+            execvp(file_args[0], file_args);
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
@@ -102,9 +102,7 @@ int main (int argc, char *argv[]) {
             file_args2 = split(line);
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
             
-            
-	    
-            execv(file_args[0], file_args);
+            execvp(file_args[0], file_args);
             
         } else {
             /* Standard mode with no target-program */
@@ -202,7 +200,6 @@ int count_size(char **arr) {
     while (arr[i]) {
         i++;
     }
-    printf("zz %d zz",i);
 
     return i+1;
 }
