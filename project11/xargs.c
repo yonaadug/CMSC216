@@ -19,7 +19,6 @@
 char read_line (char *line);
 void read_input (char *input);
 char ** merge_arr (char **first_arr, char **second_arr, int size);
-void free_file_args (char **file_args);
 int count_size (char **arr);
 
 
