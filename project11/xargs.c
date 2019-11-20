@@ -119,7 +119,7 @@ int main (int argc, char *argv[]) {
             if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {            
                 exit(1);
             }
-            exit(0);
+            
         } else {
             execvp(file_args[0], file_args);
         }
