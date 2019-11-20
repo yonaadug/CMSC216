@@ -81,7 +81,8 @@ int main (int argc, char *argv[]) {
             if (line_pid > 0) {
                 wait(&status);
 
-                free_args(file_args2);      
+                free_args(file_args2);
+                free(file_args);
 
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(temp);
