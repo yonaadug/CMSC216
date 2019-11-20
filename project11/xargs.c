@@ -85,7 +85,7 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while (read_line(line) != EOF) {
+            while (read_line(line) == '\n') {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
