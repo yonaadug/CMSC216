@@ -81,7 +81,7 @@ int main (int argc, char *argv[]) {
 
                 free_args(file_args2);         
 
-                if (!WIFEXITED(status1) || WEXITSTATUS(status1) != 0) {
+                if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(temp);
                     free(line);
                     exit(1);
