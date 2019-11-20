@@ -45,20 +45,21 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with target-program and 
             target-args */
 
-            while (read_line(line) != EOF) {
+            while (read_line(line) != EOF ) {
 
 
                 line_pid = safe_fork();
                 
-                if (line_pid == 0) {
+                if (line_pid > 0) {
 
+                    wait(NULL);
+                    
+                } else {
+
+                    
                     file_args2 = split(line);
                     file_args = merge_arr(argv + 2, file_args2, argc-2);
                     execvp(argv[2], file_args);
-                } else {
-
-                    wait(NULL);
-
 
 
                 }
@@ -97,7 +98,6 @@ int main (int argc, char *argv[]) {
                     strcpy(temp, "echo");
                     file_args = merge_arr(&temp, split(line), 1);
                     execvp(temp, file_args);
-
                 }
             }
             
