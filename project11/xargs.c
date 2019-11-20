@@ -100,10 +100,7 @@ int main (int argc, char *argv[]) {
 
                     free_args(file_args2);         
 
-                    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-                        free(temp);
-                        exit(1);
-                    }
+                    
  
                 } else {
                     file_args2 = split(line);
