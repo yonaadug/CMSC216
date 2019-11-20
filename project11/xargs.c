@@ -77,7 +77,7 @@ int main (int argc, char *argv[]) {
             line_pid = safe_fork();
 
             if (line_pid > 0) {
-                wait(&status1);
+                wait(&status);
 
                 free_args(file_args2);         
 
