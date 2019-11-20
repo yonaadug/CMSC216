@@ -145,8 +145,8 @@ char read_line(char *line) {
         index += 1;
     }
 
-    line[index-1] = '\n';
-    line[index] = '\0';
+    line[index] = '\n';
+    line[index+1] = '\0';
 
     return c;
 }
