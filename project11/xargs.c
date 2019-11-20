@@ -68,7 +68,7 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while (read_line(line) != EOF && line_pid != 0) {
+            while ( line_pid != 0 && read_line(line) != EOF) {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
@@ -79,9 +79,10 @@ int main (int argc, char *argv[]) {
                     from parent */
                     /*free_file_args(file_args);*/
                     free(temp);
+                    
                 }
 
-                temp = malloc(sizeof(char) * 11);
+                temp = malloc(sizeof(char) * 5);
                 strcpy(temp, "echo");
                 
                 file_args = merge_arr(&temp, split(line), 1);
