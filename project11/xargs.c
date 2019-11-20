@@ -43,8 +43,8 @@ int main (int argc, char *argv[]) {
 
                 wait(&status);
 
-                /*free(file_args);*/
-                free_args(file_args2);
+                /*free(file_args);
+                /*free_args(file_args2);*/
 
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(line);
@@ -58,9 +58,10 @@ int main (int argc, char *argv[]) {
                 file_args = merge_arr(argv + 2, file_args2, argc-2);
                 execvp(argv[2], file_args);
 
-            }            
+            }
             
         }
+        free(line)
         
     } else if (argc == 2 && !strcmp(argv[1], "-i")) {
         /* Run one line at a time mode with without 
