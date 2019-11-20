@@ -43,7 +43,7 @@ int main (int argc, char *argv[]) {
 
                 wait(&status);
 
-                free(file_args);
+                /*free(file_args);*/
                 free_args(file_args2);
 
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
@@ -95,6 +95,7 @@ int main (int argc, char *argv[]) {
             }
         }
 
+        free(line);
         free(temp);
         
     } else if (argc >= 2 && strcmp(argv[1], "-i")) {
