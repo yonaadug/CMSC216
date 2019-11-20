@@ -82,7 +82,7 @@ int main (int argc, char *argv[]) {
                 }
 
                 temp = malloc(sizeof(char) * 11);
-                strcpy(temp, "/bin/echo ");
+                strcpy(temp, "echo");
                 
                 file_args = merge_arr(&temp, split(line), 1);
                 line_pid = safe_fork();
