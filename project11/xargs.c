@@ -77,8 +77,8 @@ int main (int argc, char *argv[]) {
 
                     /* free memory from the file_args and temp 
                     from parent */
-                    free_file_args(file_args);
-                    free(temp);
+                    /*free_file_args(file_args);*/
+                    free(temp);*/
                 }
 
                 temp = malloc(sizeof(char) * 11);
