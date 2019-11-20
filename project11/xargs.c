@@ -45,22 +45,31 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with target-program and 
             target-args */
 
-            while (read_line(line) != EOF && line_pid != 0) {
+            while (read_line(line) != EOF) {
 
-                if (getpid() == line_pid) {
+
+                line_pid = safe_fork();
+                
+                if (line_pid == 0) {
+
+                    file_args2 = split(line);
+                    file_args = merge_arr(argv + 2, file_args2, argc-2);
+                    execvp(argv[2], file_args);
+                } else {
+
                     wait(NULL);
-                    /*free(file_args);
-                    free_file_args(file_args2);*/
+
+
+
                 }
                 
                 
                 /*free section after argv in file_args*/
-                file_args2 = split(line);
-                file_args = merge_arr(argv + 2, file_args2, argc-2);
-                line_pid = safe_fork();
+                
+                
             }
             
-            execvp(argv[2], file_args);
+            
             
 
 
