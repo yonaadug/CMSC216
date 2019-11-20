@@ -41,11 +41,12 @@ int main (int argc, char *argv[]) {
             
             if (line_pid > 0) {
 
+                wait(NULL);
+
+                free(file_args);
+                free_args(file_args2);
+                
                 wait(&status);
-
-                /*free(file_args);
-                free_args(file_args2);*/
-
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(line);
                     exit(1);
@@ -78,10 +79,11 @@ int main (int argc, char *argv[]) {
             line_pid = safe_fork();
 
             if (line_pid > 0) {
+                wait(NULL);
+
+                free_args(file_args2);
+
                 wait(&status);
-
-                free_args(file_args2);         
-
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(temp);
                     free(line);
