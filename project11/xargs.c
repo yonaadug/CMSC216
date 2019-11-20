@@ -68,11 +68,14 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while ( line_pid != 0 && read_line(line) == '\n') {
+            while (read_line(line) == '\n') {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
-                if (line_pid == getpid()) {
+
+                line_pid = safe_fork();
+
+                if (line_pid > 0) {
                     wait(NULL); 
 
                     /* free memory from the file_args and temp 
@@ -80,16 +83,16 @@ int main (int argc, char *argv[]) {
                     /*free_file_args(file_args);*/
                     free(temp);
                     
-                }
+                } else {
+                    temp = malloc(sizeof(char) * 5);
+                    strcpy(temp, "echo");
+                    file_args = merge_arr(&temp, split(line), 1);
+                    execvp(temp, file_args);
 
-                temp = malloc(sizeof(char) * 5);
-                strcpy(temp, "echo");
-                
-                file_args = merge_arr(&temp, split(line), 1);
-                line_pid = safe_fork();
+                }
             }
             
-            execvp(temp, file_args);
+            
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
