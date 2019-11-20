@@ -56,6 +56,7 @@ int main (int argc, char *argv[]) {
 
             } else {
                 execvp(argv[2], file_args);
+                exit(1);
             }
             
         }
@@ -90,6 +91,7 @@ int main (int argc, char *argv[]) {
 
             } else {  
                 execvp(temp, file_args);
+                exit(1);
             }
         }
 
@@ -119,6 +121,7 @@ int main (int argc, char *argv[]) {
 
         } else {
             execvp(file_args[0], file_args);
+            exit(1);
         }
         
         
@@ -151,6 +154,7 @@ int main (int argc, char *argv[]) {
         } else {
 
             execv(file_args[0], file_args);
+            exit(1);
         }
         
 
