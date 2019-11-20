@@ -44,7 +44,7 @@ int main (int argc, char *argv[]) {
                 wait(&status);
 
                 /*free(file_args);
-                /*free_args(file_args2);*/
+                free_args(file_args2);*/
 
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(line);
@@ -61,7 +61,7 @@ int main (int argc, char *argv[]) {
             }
             
         }
-        free(line)
+        free(line);
         
     } else if (argc == 2 && !strcmp(argv[1], "-i")) {
         /* Run one line at a time mode with without 
