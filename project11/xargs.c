@@ -201,7 +201,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 int count_size(char **arr) {
     int i = 0;
 
-    while (arr[i]) {
+    while (arr[i] != NULL) {
         i++;
     }
 
