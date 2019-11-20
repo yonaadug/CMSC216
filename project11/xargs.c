@@ -52,7 +52,11 @@ int main (int argc, char *argv[]) {
                 
                 if (line_pid > 0) {
 
-                    wait(NULL);
+                    wait(&status);
+
+                    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                        exit(1);
+                    }
 
                 } else {
 
@@ -86,7 +90,11 @@ int main (int argc, char *argv[]) {
                 line_pid = safe_fork();
 
                 if (line_pid > 0) {
-                    wait(NULL); 
+                    wait(NULL);
+
+                    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                        exit(1);
+                    }
 
                     /* free memory from the file_args and temp 
                     from parent */
@@ -139,9 +147,8 @@ int main (int argc, char *argv[]) {
         wait(&status);
 
 
-        if (WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             exit(1);
-
         }
 
         /*free literally everything, because 1st ammendment :) */
