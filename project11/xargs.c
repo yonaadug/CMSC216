@@ -129,9 +129,7 @@ int main (int argc, char *argv[]) {
         wait(NULL);
 
         /*free literally everything, because 1st ammendment :) */
-        free(line);
-        free(temp);
-        free_file_args(file_args);
+        
 
         exit(0);
 
