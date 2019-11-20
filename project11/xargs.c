@@ -129,7 +129,14 @@ int main (int argc, char *argv[]) {
         wait(NULL);
 
         /*free literally everything, because 1st ammendment :) */
-        
+
+        if (line != NULL)
+            free(line);
+        if (temp != NULL)
+            free(temp);
+
+        if (file_args);
+            free_file_args(file_args);
 
         exit(0);
 
@@ -201,11 +208,7 @@ void free_file_args(char **file_args) {
     /*Variable holds number of elements in file_args*/
     int i, size = count_size(file_args);
 
-    /*Variable of size used to free the elements*/
-    for (i = 0; i < size-1; i++) {
-        free(file_args[i]);
-    }
-
+    
     free(file_args);
 }
 
