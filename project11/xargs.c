@@ -105,7 +105,7 @@ int main (int argc, char *argv[]) {
                     file_args2 = split(line);
                     temp = malloc(sizeof(char) * 5);
                     strcpy(temp, "echo");
-                    file_args = merge_arr(&temp, file_args, 1);
+                    file_args = merge_arr(&temp, file_args2, 1);
                     execvp(temp, file_args);
                 }
             }
