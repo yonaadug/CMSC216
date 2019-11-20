@@ -54,9 +54,8 @@ int main (int argc, char *argv[]) {
 
                     wait(&status);
 
-                    if ()
-
-
+                    free(file_args);
+                    free_args(file_args2);
 
                     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                         exit(1);
@@ -85,7 +84,7 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while (read_line(line) == '\n') {
+            while (read_line(line) != EOF) {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
@@ -95,20 +94,20 @@ int main (int argc, char *argv[]) {
                 if (line_pid > 0) {
                     wait(NULL);
 
+                    free_args(file_args2);             
+
                     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                         exit(1);
                     }
-
-                    
-                    
+ 
                 } else {
-                    
-                    file_args = merge_arr("echo", split(line), 1);
+                    file_args2 = split(line);
+                    temp = malloc(sizeof(char) * 5);
+                    strcpy(temp, "echo");
+                    file_args = merge_arr(&temp, file_args, 1);
                     execvp(temp, file_args);
                 }
             }
-            
-            
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
@@ -118,11 +117,18 @@ int main (int argc, char *argv[]) {
             read_input(line);
 
             
-
             file_args2 = split(line);
             file_args = merge_arr(argv + 1, file_args2, argc - 1);
+
+            line_pid = safe_fork();
+
+            if (line_pid > 0) {
+                free_args(free_args2);
+            } else {
+                execvp(file_args[0], file_args);
+            }
             
-            execvp(file_args[0], file_args);
+            
             
         } else {
             /* Standard mode with no target-program */
@@ -131,7 +137,7 @@ int main (int argc, char *argv[]) {
             read_input(line);
             temp = malloc(sizeof(char) * (strlen(line) + 12));
             strcpy(temp, "/bin/echo ");
-            strncat(temp, line, strlen(line) + 12);
+            strcat(temp, line);
             
             file_args = split(temp);
             
@@ -229,4 +235,14 @@ int count_size(char **arr) {
     }
 
     return i+1;
+}
+
+void free_args(char **arr) {
+    int size = count_size(arr), i;
+
+    for (i = 0; i < size; i++) {
+        free(arr[i]);
+    }
+
+    free(arr);
 }
