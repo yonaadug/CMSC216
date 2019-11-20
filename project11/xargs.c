@@ -20,6 +20,7 @@ char read_line (char *line);
 void read_input (char *input);
 char ** merge_arr (char **first_arr, char **second_arr, int size);
 int count_size (char **arr);
+void free_args (char **arr);
 
 
 int main (int argc, char *argv[]) {
@@ -92,7 +93,7 @@ int main (int argc, char *argv[]) {
                 line_pid = safe_fork();
 
                 if (line_pid > 0) {
-                    wait(NULL);
+                    wait(&status);
 
                     free_args(file_args2);             
 
@@ -123,7 +124,8 @@ int main (int argc, char *argv[]) {
             line_pid = safe_fork();
 
             if (line_pid > 0) {
-                free_args(free_args2);
+                wait(&status);
+                free_args(file_args2);
             } else {
                 execvp(file_args[0], file_args);
             }
@@ -159,11 +161,8 @@ int main (int argc, char *argv[]) {
         /*free literally everything, because 1st ammendment :) */
         free(line);
         free(temp);
-        free()
- 
 
         exit(0);
-
     }
 
     return 0;
