@@ -49,8 +49,8 @@ int main (int argc, char *argv[]) {
 
                 if (getpid() == line_pid) {
                     wait(NULL);
-                    free(file_args);
-                    free_file_args(file_args2);
+                    /*free(file_args);
+                    free_file_args(file_args2);*/
                 }
                 
                 
