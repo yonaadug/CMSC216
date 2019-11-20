@@ -30,141 +30,133 @@ int main (int argc, char *argv[]) {
     
     line = malloc(sizeof(char) * 1000);
 
-    pid = safe_fork();
+    if (argc > 2 && !strcmp(argv[1], "-i") ) {
+        /* Run one line at a time mode with target-program and 
+        target-args */
 
-    /* if fork unsuccessful, exit program */
-    if (pid < 0) {
-        exit(1);
-    }
+        while (read_line(line) != EOF ) {
 
 
-    if (pid == 0) { 
-        /*Child process*/
+            line_pid = safe_fork();
+            
+            if (line_pid > 0) {
+
+                wait(&status);
+
+                free(file_args);
+                free_args(file_args2);
+
+                if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                    free(line);
+                    exit(1);
+                }
+
+            } else {
+
+                
+                file_args2 = split(line);
+                file_args = merge_arr(argv + 2, file_args2, argc-2);
+                execvp(argv[2], file_args);
+
+            }            
+            
+        }
         
+    } else if (argc == 2 && !strcmp(argv[1], "-i")) {
+        /* Run one line at a time mode with without 
+        target-program */
 
-        if (argc > 2 && !strcmp(argv[1], "-i") ) {
-            /* Run one line at a time mode with target-program and 
-            target-args */
+        temp = malloc(sizeof(char) * 5);
+        strcpy(temp, "echo");
 
-            while (read_line(line) != EOF ) {
-
-
-                line_pid = safe_fork();
-                
-                if (line_pid > 0) {
-
-                    wait(&status);
-
-                    free(file_args);
-                    free_args(file_args2);
-
-                    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-                        exit(1);
-                    }
-
-                } else {
-
-                    
-                    file_args2 = split(line);
-                    file_args = merge_arr(argv + 2, file_args2, argc-2);
-                    execvp(argv[2], file_args);
-
-                }
-                
-                
-                /*free section after argv in file_args*/
-                
-                
-            }
-            
-            
-            
-
-
-        } else if (argc == 2 && !strcmp(argv[1], "-i")) {
-            /* Run one line at a time mode with without 
-            target-program */
-
-            temp = malloc(sizeof(char) * 5);
-            strcpy(temp, "echo");
-
-            while (read_line(line) != EOF) {
-                /* Read line then fork, then let child exit loop while parent continues
-                in the loop */
-
-
-                line_pid = safe_fork();
-
-                if (line_pid > 0) {
-                    wait(&status);
-
-                    free_args(file_args2);         
-
-                    
- 
-                } else {
-                    file_args2 = split(line);
-                    
-                    file_args = merge_arr(&temp, file_args2, 1);
-                    execvp(temp, file_args);
-                }
-            }
-
-            free(temp);
-            
-        } else if (argc >= 2 && strcmp(argv[1], "-i")) {
-            /* Standard mode and just target-program with 
-            possible target_args */
-
-            read_input(line);
+        while (read_line(line) != EOF) {
+            /* Read line then fork, then let child exit loop while parent continues
+            in the loop */
 
             
-            file_args2 = split(line);
-            file_args = merge_arr(argv + 1, file_args2, argc - 1);
-
             line_pid = safe_fork();
 
             if (line_pid > 0) {
-                wait(&status);
-                free_args(file_args2);
+                wait(&status1);
+
+                free_args(file_args2);         
+
+                if (!WIFEXITED(status1) || WEXITSTATUS(status1) != 0) {
+                    free(temp);
+                    free(line);
+                    exit(1);
+                }
+
             } else {
-                execvp(file_args[0], file_args);
+                file_args2 = split(line);
+                
+                file_args = merge_arr(&temp, file_args2, 1);
+                execvp(temp, file_args);
             }
-            
-            
+        }
+
+        free(temp);
+        
+    } else if (argc >= 2 && strcmp(argv[1], "-i")) {
+        /* Standard mode and just target-program with 
+        possible target_args */
+
+        read_input(line);
+
+        
+        file_args2 = split(line);
+        file_args = merge_arr(argv + 1, file_args2, argc - 1);
+
+        line_pid = safe_fork();
+
+        if (line_pid > 0) {
+            wait(&status);
+            free_args(file_args2);
+            free(line);
+
+            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {            
+                exit(1);
+            }
+            exit(0);
+        } else {
+            execvp(file_args[0], file_args);
+        }
+        
+        
+        
+    } else {
+        /* Standard mode with no target-program */
+
+
+        read_input(line);
+        temp = malloc(sizeof(char) * (strlen(line) + 12));
+        strcpy(temp, "/bin/echo ");
+        strncat(temp, line, strlen(line) + 12);
+        
+        file_args = split(temp);
+
+        pid = safe_fork();
+        
+        if (pid > 0) {
+
+            wait(&status);
+
+            free_args(file_args);
+            free(line);
+
+            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {            
+                exit(1);
+            }
+            exit(0);
             
         } else {
-            /* Standard mode with no target-program */
 
-
-            read_input(line);
-            temp = malloc(sizeof(char) * (strlen(line) + 12));
-            strcpy(temp, "/bin/echo ");
-            strcat(temp, line);
-            
-            file_args = split(temp);
-            
             execv(file_args[0], file_args);
-
         }
+        
 
-    } else {
-        /*Parent will be responsible for freeing everthing*/
-
-        /*Wait for all children to free all allocated*/
-        wait(&status);
-
-
-        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-            exit(1);
-        }
-
-        /*free literally everything, because 1st ammendment :) */
-        free(line);
-        free(temp);
-
-        exit(0);
     }
+    
 
     return 0;
 }
