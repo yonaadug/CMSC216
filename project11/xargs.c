@@ -24,7 +24,7 @@ int count_size (char **arr);
 
 int main (int argc, char *argv[]) {
 
-    int pid, line_pid = -1;
+    int pid, line_pid, status;
     char *line, *temp = NULL, **file_args = NULL, **file_args2 = NULL;    
     
     line = malloc(sizeof(char) * 1000);
@@ -53,7 +53,7 @@ int main (int argc, char *argv[]) {
                 if (line_pid > 0) {
 
                     wait(NULL);
-                    
+
                 } else {
 
                     
@@ -136,7 +136,13 @@ int main (int argc, char *argv[]) {
         /*Parent will be responsible for freeing everthing*/
 
         /*Wait for all children to free all allocated*/
-        wait(NULL);
+        wait(&status);
+
+
+        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+            exit(1);
+
+        }
 
         /*free literally everything, because 1st ammendment :) */
  
