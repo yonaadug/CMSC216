@@ -206,8 +206,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 void free_file_args(char **file_args) {
 
     /*Variable holds number of elements in file_args*/
-    int i, size = count_size(file_args);
-
+    
     
     free(file_args);
 }
