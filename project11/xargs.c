@@ -54,6 +54,10 @@ int main (int argc, char *argv[]) {
 
                     wait(&status);
 
+                    if ()
+
+
+
                     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                         exit(1);
                     }
@@ -64,7 +68,6 @@ int main (int argc, char *argv[]) {
                     file_args2 = split(line);
                     file_args = merge_arr(argv + 2, file_args2, argc-2);
                     execvp(argv[2], file_args);
-
 
                 }
                 
@@ -96,15 +99,11 @@ int main (int argc, char *argv[]) {
                         exit(1);
                     }
 
-                    /* free memory from the file_args and temp 
-                    from parent */
-                    /*free_file_args(file_args);*/
-                    free(temp);
+                    
                     
                 } else {
-                    temp = malloc(sizeof(char) * 5);
-                    strcpy(temp, "echo");
-                    file_args = merge_arr(&temp, split(line), 1);
+                    
+                    file_args = merge_arr("echo", split(line), 1);
                     execvp(temp, file_args);
                 }
             }
@@ -152,6 +151,9 @@ int main (int argc, char *argv[]) {
         }
 
         /*free literally everything, because 1st ammendment :) */
+        free(line);
+        free(temp);
+        free()
  
 
         exit(0);
@@ -217,7 +219,6 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
     
     return merged_arr;
 }
-
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char **arr) {
