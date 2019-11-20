@@ -162,15 +162,15 @@ void read_input(char *input) {
 
     while ((c = getchar()) != EOF) {
         if (c == '\n') {
-	    c = ' ';
-	}
+	        c = ' ';
+	    }
 	    
         input[index] = c;
         index += 1;
     }
 
     input[index] = '\n';
-    input[index] = '\0';
+    input[index + 1] = '\0';
 }
 
 /* Takes two string arrays and takes the elemnts and puts it in one 
@@ -201,7 +201,7 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
 int count_size(char **arr) {
     int i = 0;
 
-    while (arr[i] != NULL) {
+    while (arr[i]) {
         i++;
     }
 
