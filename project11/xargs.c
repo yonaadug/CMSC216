@@ -37,14 +37,17 @@ int main (int argc, char *argv[]) {
         while (read_line(line) != EOF ) {
 
 
+            
+            file_args2 = split(line);
+            file_args = merge_arr(argv + 2, file_args2, argc-2);
             line_pid = safe_fork();
             
             if (line_pid > 0) {
 
                 wait(&status);
 
-                /*free(file_args);
-                free_args(file_args2);*/
+                free(file_args);
+                free_args(file_args2);
 
                 if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
                     free(line);
@@ -52,12 +55,7 @@ int main (int argc, char *argv[]) {
                 }
 
             } else {
-
-                
-                file_args2 = split(line);
-                file_args = merge_arr(argv + 2, file_args2, argc-2);
                 execvp(argv[2], file_args);
-
             }
             
         }
@@ -74,7 +72,9 @@ int main (int argc, char *argv[]) {
             /* Read line then fork, then let child exit loop while parent continues
             in the loop */
 
-            
+            file_args2 = split(line);
+            file_args = merge_arr(&temp, file_args2, 1);
+
             line_pid = safe_fork();
 
             if (line_pid > 0) {
@@ -88,10 +88,7 @@ int main (int argc, char *argv[]) {
                     exit(1);
                 }
 
-            } else {
-                file_args2 = split(line);
-                
-                file_args = merge_arr(&temp, file_args2, 1);
+            } else {  
                 execvp(temp, file_args);
             }
         }
@@ -109,9 +106,9 @@ int main (int argc, char *argv[]) {
         file_args2 = split(line);
         file_args = merge_arr(argv + 1, file_args2, argc - 1);
 
-        line_pid = safe_fork();
+        pid = safe_fork();
 
-        if (line_pid > 0) {
+        if (pid > 0) {
             wait(&status);
             free_args(file_args2);
             free(line);
@@ -119,7 +116,7 @@ int main (int argc, char *argv[]) {
             if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {            
                 exit(1);
             }
-            
+
         } else {
             execvp(file_args[0], file_args);
         }
