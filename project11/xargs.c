@@ -129,14 +129,7 @@ int main (int argc, char *argv[]) {
         wait(NULL);
 
         /*free literally everything, because 1st ammendment :) */
-
-        if (line != NULL)
-            free(line);
-        if (temp != NULL)
-            free(temp);
-
-        if (file_args);
-            free_file_args(file_args);
+ 
 
         exit(0);
 
@@ -202,21 +195,15 @@ char **merge_arr(char **first_arr, char **second_arr, int size_first) {
     return merged_arr;
 }
 
-/*Frees every element in file_args and also file_args*/
-void free_file_args(char **file_args) {
-
-    /*Variable holds number of elements in file_args*/
-    
-    
-    free(file_args);
-}
 
 /*Counts size of the array including the NULL at the end*/
 int count_size(char **arr) {
     int i = 0;
+
     while (arr[i]) {
         i++;
     }
+    printf("zz %d zz",i);
 
     return i+1;
 }
