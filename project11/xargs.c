@@ -68,7 +68,7 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
-            while ( line_pid != 0 && read_line(line) != EOF) {
+            while ( line_pid != 0 && read_line(line) == '\n') {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
 
@@ -89,7 +89,7 @@ int main (int argc, char *argv[]) {
                 line_pid = safe_fork();
             }
             
-            execvp(file_args[0], file_args);
+            execvp(temp, file_args);
 
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
