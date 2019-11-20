@@ -85,6 +85,9 @@ int main (int argc, char *argv[]) {
             /* Run one line at a time mode with without 
             target-program */
 
+            temp = malloc(sizeof(char) * 5);
+            strcpy(temp, "echo");
+
             while (read_line(line) != EOF) {
                 /* Read line then fork, then let child exit loop while parent continues
                 in the loop */
@@ -95,21 +98,22 @@ int main (int argc, char *argv[]) {
                 if (line_pid > 0) {
                     wait(&status);
 
-                    free_args(file_args2);             
+                    free_args(file_args2);         
 
                     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                        free(temp);
                         exit(1);
                     }
  
                 } else {
                     file_args2 = split(line);
-                    temp = malloc(sizeof(char) * 5);
-                    strcpy(temp, "echo");
+                    
                     file_args = merge_arr(&temp, file_args2, 1);
                     execvp(temp, file_args);
                 }
             }
 
+            free(temp);
             
         } else if (argc >= 2 && strcmp(argv[1], "-i")) {
             /* Standard mode and just target-program with 
