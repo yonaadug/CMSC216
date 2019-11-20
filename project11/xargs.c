@@ -139,7 +139,7 @@ int main (int argc, char *argv[]) {
         wait(&status);
 
 
-        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+        if (WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             exit(1);
 
         }
