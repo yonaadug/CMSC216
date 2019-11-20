@@ -98,7 +98,7 @@ int main (int argc, char *argv[]) {
 
             read_input(line);
 
-            temp = concat_arr_str(argv + 1, line, argc - 1);
+            temp = merge_arr(argv + 1, line, argc - 1);
 
             file_args = split(line);
             
