@@ -153,7 +153,6 @@ int main (int argc, char *argv[]) {
             exit(0);
             
         } else {
-
             execv(file_args[0], file_args);
             exit(1);
         }
@@ -181,8 +180,11 @@ char read_line(char *line) {
     return c;
 }
 
-/**/
+/* This function reads all input until EOF is reached
+ into a string*/
 void read_input(char *input) {
+
+    /* Character used for */
     char c;
     int index = 0;
 
@@ -233,11 +235,14 @@ int count_size(char **arr) {
     return i+1;
 }
 
+/* This function frees memory from an array of strings, 
+ used to free the return of **split */
 void free_args(char **arr) {
-    int size = count_size(arr), i;
+    int i=0;
 
-    for (i = 0; i < size; i++) {
+    while (arr[i]) {
         free(arr[i]);
+        i++;
     }
 
     free(arr);
