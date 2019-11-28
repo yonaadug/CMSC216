@@ -1,0 +1,14 @@
+#!/bin/tcsh
+
+# CMSC 216, Fall 2019, Project #12
+# Public test 4 (public04)
+#
+# Tests the second program in counting the number of digits in a number
+# where it appears more than once.
+#
+# (c) Rana Khalil and Larry Herman, 2019.  You are allowed to use this code
+# yourself, but not to provide it to anyone else.
+
+module load spim
+
+spim -file prog2.s < public04.input | tail -n +2
