@@ -8,22 +8,21 @@ int main() {
   int i = 0;
   char c;
 
-  /*
-   This loop will read input and print lines with
-   correct number of spaces when a tab character is
-   used
+  /* This loop will read input and print lines with
+     correct number of spaces when a tab character is
+     used
    */
   do {
 
     c = getchar();
     
-      /*Not a new line character, so put 'c' in the array*/
+      /* Not a new line character, so put 'c' in the array*/
     file[i] = c;
     i++;
 
     if (c == '\n' || c == EOF) {
-      /*New line character in 'c' so print the
-	line stored in the array and print a new line after*/
+      /* New line character in 'c' so print the
+	       line stored in the array and print a new line after*/
       printLine (file, i);
 
       i = 0;
@@ -56,7 +55,7 @@ void printLine (char file[], int line_count) {
 
       /*Loop will print spaces, replacing the tab*/
       for (i = 0; i < tab_space; i++) {
-	printf(" ");
+        printf(" ");
       }
       
     } else if (c != EOF) {

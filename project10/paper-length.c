@@ -58,6 +58,7 @@ int main() {
 
             printf("Long Enough!\n"); 
             exit(0);
+            
         } else {
 
             printf("Too Short!\n");
