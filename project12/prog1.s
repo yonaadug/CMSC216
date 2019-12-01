@@ -1,31 +1,45 @@
+# Name:                     Yonathan Adugna Kebede
+# TerpConnect Username:     ykebed12
+# UID:                      115659780
+# Section Number:           0302
+
+# This assembly program calculates the sum
+# of cubes. The user enters a number, n, and 
+# the program will calculate and print
+# 1^3 + 2^3 + 3^3 + .... + n^3
+# using the equation ((n * (n + 1)) / 2) ^ 2;
+
         .data
 
 n:      .word 0
 ans:    .word -1
-eoln:   .asciiz "\n"
         
         .text
- 
-main:   li              $v0, 5              # scanf("%d", &n)
+
+main:   
+        li              $v0, 5            # scanf("%d", &n)
         syscall
-        move            $t2, $v0
-        sw              $t2, n
+        move            $t0, $v0
+        sw              $t0, n
 
-        bltz            $t2, skip           # if n < 0 then skip
+        bltz            $t0, skip         # if n < 0 then skip
         
-        add             $t3, $t2, 1         # ans = ((n * (n + 1)) / 2) * ((n * (n + 1)) / 2);
-        mul             $t3, $t3, $t2
-        div             $t3, $t3, 2
-        mul             $t3, $t3, $t3
-        sw              $t3, ans
+        # ans = ((n * (n + 1)) / 2) * ((n * (n + 1)) / 2);  
+        add             $t1, $t0, 1       # ((n * (n + 1)) / 2) in register
+        mul             $t1, $t1, $t0       
+        div             $t1, $t1, 2
 
-skip:   move            $a0, $t3            # print("%d", ans);
+        mul             $t1, $t1, $t1     # ans = register ^ 2
+        sw              $t1, ans
+
+skip:   
+        lw              $a0, ans          # print("%d", ans);
         li              $v0, 1
         syscall
 
-        la              $a0, eoln            # printf("%c", '\n')
-        li              $v0, 4
+        li              $v0, 11           # printf("\n");
+        li              $a0, 10
         syscall
 
-        li              $v0, 10              # quit program
+        li              $v0, 10           # quit program
         syscall
