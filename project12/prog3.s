@@ -6,6 +6,9 @@
 # This program counts the number of times a digit
 # occurs in a number recursively
 
+# I pledge on my honor that I have not given or recieved
+# any unauthorized assistance on this examination or assignment.
+
         .data
 
 x:      .word 0
@@ -34,10 +37,10 @@ main:   li          $sp, 0x7ffffffc     # set up stack ptr
 
         jal         count_digit         # call count_digit function
 
-        add		    $sp, $sp 8          # pop x and y from stack
+        add         $sp, $sp 8          # pop x and y from stack
 
         move        $t0, $v0            # store value in register
-        sw	        $t0, answer
+        sw	    $t0, answer
 
         li          $v0, 1              # printf("%d", n)
         lw          $a0, answer
@@ -120,7 +123,7 @@ recurs:
 
         jal         count_digit         # call count_digit (recursion)
 
-        add		    $sp, $sp 8          # pop num/10 and digit from stack
+        add         $sp, $sp 8          # pop num/10 and digit from stack
 
         move        $t2, $v0            # result = 
         sw          $t2, 8($sp)         #   count_digit(num / 10, digit);

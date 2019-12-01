@@ -7,7 +7,10 @@
 # of cubes. The user enters a number, n, and 
 # the program will calculate and print
 # 1^3 + 2^3 + 3^3 + .... + n^3
-# using the equation ((n * (n + 1)) / 2) ^ 2;
+# using the equation ((n * (n + 1)) / 2) ^ 2
+
+# I pledge on my honor that I have not given or recieved
+# any unauthorized assistance on this examination or assignment.
 
         .data
 
@@ -16,6 +19,7 @@ ans:    .word -1
         
         .text
 
+# Main function start
 main:   
         li              $v0, 5            # scanf("%d", &n)
         syscall
@@ -31,7 +35,7 @@ main:
 
         mul             $t1, $t1, $t1     # ans = register ^ 2
         sw              $t1, ans
-
+# End if
 skip:   
         lw              $a0, ans          # print("%d", ans);
         li              $v0, 1
@@ -43,3 +47,4 @@ skip:
 
         li              $v0, 10           # quit program
         syscall
+# Main function End

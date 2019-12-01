@@ -7,6 +7,10 @@
 # occurs in a number using a while loop to iterate
 # through each digit using mod (rem) and integer
 # division.
+
+# I pledge on my honor that I have not given or recieved
+# any unauthorized assistance on this examination or assignment.
+
         .data
 
 x:      .word 0
@@ -36,10 +40,10 @@ main:
 
         jal         count_digit         # call the count_digit func
 
-        add		    $sp, $sp 8          # pop x and y from stack
+        add         $sp, $sp 8          # pop x and y from stack
 
         move        $t0, $v0            # store value in register
-        sw	        $t0, result
+        sw	    $t0, result
 
         li          $v0, 1              # printf("%d", n)
         lw          $a0, result
@@ -91,7 +95,7 @@ if:
 
         # While Loop & else statment start
 loop:       
-        blez		$t0, exit           # beginning of while loop
+        blez	    $t0, exit           # beginning of while loop
 
         rem         $t3, $t0, 10        # rightmost = num % 10
         sw          $t3, 4($sp)
