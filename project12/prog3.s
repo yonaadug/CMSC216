@@ -6,13 +6,13 @@
 # This program counts the number of times a digit
 # occurs in a number recursively
 
-            .data
+        .data
 
-x:          .word 0
-y:          .word 0
-answer:     .word 0
+x:      .word 0
+y:      .word 0
+answer: .word 0
 
-            .text
+        .text
 
 # Main function
 main:   li          $sp, 0x7ffffffc     # set up stack ptr
