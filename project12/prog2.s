@@ -87,13 +87,13 @@ count_digit:
 
 
 if:         
-        bnez        $t0, loop           # if (digit < 0 || digit > 9)
-        bnez        $t1, loop           # loop
+        bnez        $t0, loop           # if (digit != 0 || num != 0)
+        bnez        $t1, loop             # go to loop
 
         li          $t2, 1              # count = 1
         sw          $t2, 8($sp)
 
-        # While Loop & else statment start
+        # While Loop & else statement start
 loop:       
         blez	    $t0, exit           # beginning of while loop
 
