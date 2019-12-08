@@ -11,24 +11,22 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-
 void *count(void *filename);
 
 pthread_t *thread_id;
 
 struct thread_args {
-    int *lines;
-    int *words;
-    int *chars;
+    int lines;
+    int words;
+    int chars;
     char *file;
        
 };
 
-/*MY MAIN*/
 int main (int argc, char *argv[]) {
 
     int total_lines = 0, total_words = 0, total_chars = 0;
-    int arg_num = 1, i;
+    int arg_num = 1;
 
     if (argc > 1) {
 
@@ -37,20 +35,17 @@ int main (int argc, char *argv[]) {
 
         while (arg_num < argc) {
 
-
             t_args->file = argv[arg_num];
-            t_args->lines = &total_lines;
-            t_args->words = &total_words;
-            t_args->chars = &total_chars;
 
             pthread_create(&thread_id[arg_num-1], NULL, &count, t_args);
+            pthread_join(thread_id[arg_num-1], NULL);
+
+            total_chars += t_args->chars;
+            total_lines += t_args->lines;
+            total_words += t_args->words;
+
             arg_num++;
             
-        }
-
-        for (i = 0; i< argc-2; i++) {
-            pthread_join(thread_id[i], NULL);
-
         }
 
     }
@@ -67,9 +62,7 @@ void *count(void *file_and_args){
     FILE *fp;
     struct thread_args *t_args = file_and_args; 
     char ch, next_ch, *filename = t_args->file;
-    int *lines = t_args->lines, *words = t_args->words, 
-        *chars = t_args->chars;
-
+    int lines = 0, words = 0, chars = 0; 
 
     fp= fopen(filename, "r");  /* open that file */
 
@@ -87,25 +80,29 @@ void *count(void *file_and_args){
 
             /* a newline means the line count increases */
             if (ch == '\n') {
-                (*lines)++;
+                lines++;
             }
 
             /* if the current character is not whitespace but the next character
             is, or if the current character is not whitespace and it is the
             last character in the input, the word count increases */
             if (!isspace(ch) && (isspace(next_ch) || feof(fp))) {
-                (*words)++;
+                words++;
             }
 
             /* increasing the character count is a no-brainer */
-            (*chars)++;
+            chars++;
 
-            ch= fgetc(fp);
+            ch = fgetc(fp);
         }
 
 
         fclose(fp);
     }
+
+    t_args->lines = lines;
+    t_args->words = words;
+    t_args->chars = chars;
 
     return NULL;
 }
