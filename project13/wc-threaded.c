@@ -13,7 +13,7 @@
 
 void *count(void *filename);
 
-pthread_t *thread_id;
+
 
 struct thread_args {
     int lines;
@@ -27,6 +27,7 @@ int main (int argc, char *argv[]) {
 
     int total_lines = 0, total_words = 0, total_chars = 0;
     int arg_num = 1;
+    pthread_t *thread_id;
 
     if (argc > 1) {
 
@@ -48,9 +49,13 @@ int main (int argc, char *argv[]) {
             
         }
 
+        free(t_args);
+        free(thread_id);
+
     }
 
     printf("%4d %4d %4d\n", total_lines, total_words, total_chars);
+    
 
     return 0;
 }
