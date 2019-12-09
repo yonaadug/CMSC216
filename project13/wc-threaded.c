@@ -85,7 +85,7 @@ int main (int argc, char *argv[]) {
 
         /* Free all allocated memory */
         free(thread_id);
-        free(t_args)
+        free(t_args);
 
     }
 
