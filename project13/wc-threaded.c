@@ -45,6 +45,7 @@ int main (int argc, char *argv[]) {
     /* variables that will hold total words, lines and chars*/
     int total_lines = 0, total_words = 0, total_chars = 0;
 
+    /* arg_num is used for keeping track of argument used in argv*/
     int arg_num = 1, i;
     pthread_t *thread_id;
 
@@ -67,6 +68,7 @@ int main (int argc, char *argv[]) {
             t_args->file = argv[arg_num];
             t_args->id = arg_num-1;
             
+            /* Create thread*/
             pthread_create(&thread_id[arg_num-1], NULL, &count, t_args);
         
             arg_num++;
