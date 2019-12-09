@@ -77,7 +77,7 @@ int main (int argc, char *argv[]) {
 
         /* Get results from each thread */
         for (i = 0; i < argc-1; i++) {
-            pthread_join(thread_id[arg_num-1], NULL);
+            pthread_join(thread_id[i], NULL);
 
             /* Increment totals */
             total_lines += t_args->lines[i];
