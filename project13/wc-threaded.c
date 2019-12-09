@@ -51,7 +51,8 @@ int main (int argc, char *argv[]) {
     if (argc > 1) {
 
         /* Allocate memory for multiple args */
-        struct thread_args **t_args = malloc(sizeof(struct thread_args *));
+        struct thread_args **t_args = 
+            malloc(sizeof(struct thread_args *) * (argc-1));
 
         /* Allocate memory for thread id's for different files */
         thread_id = malloc(sizeof(pthread_t) * (argc-1));
@@ -63,6 +64,7 @@ int main (int argc, char *argv[]) {
             /* Allocate memory for struct*/
             t_args[arg_num-1] = malloc(sizeof(struct thread_args));
             t_args[arg_num-1]->file = argv[arg_num];
+            
 
             /* Create thread*/
             pthread_create(&thread_id[arg_num-1], NULL, &count, t_args[arg_num-1]);
