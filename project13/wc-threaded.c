@@ -31,10 +31,9 @@ void *count(void *file_and_args);
  * the thread
  */
 struct thread_args {
-    int *lines;
-    int *words;
-    int *chars;
-    int id;
+    int lines;
+    int words;
+    int chars;
     char *file;
        
 };
@@ -51,11 +50,8 @@ int main (int argc, char *argv[]) {
 
     if (argc > 1) {
 
-        /* Allocate memory for the args into thread*/
-        struct thread_args *t_args = malloc(sizeof(struct thread_args));
-        t_args->chars = malloc(sizeof(int)* (argc-1));
-        t_args->words = malloc(sizeof(int)* (argc-1));
-        t_args->lines = malloc(sizeof(int)* (argc-1));
+        /* Allocate memory for multiple args */
+        struct thread_args **t_args = malloc(sizeof(struct thread_args *));
 
         /* Allocate memory for thread id's for different files */
         thread_id = malloc(sizeof(pthread_t) * (argc-1));
@@ -64,13 +60,13 @@ int main (int argc, char *argv[]) {
         /* Loop through each argument in argv to pass into thread */
         while (arg_num < argc) {
 
-            /* Pass file name and 'id' index */
-            t_args->file = argv[arg_num];
-            t_args->id = arg_num-1;
-            
+            /* Allocate memory for struct*/
+            t_args[arg_num-1] = malloc(sizeof(struct thread_args));
+            t_args[arg_num-1]->file = argv[arg_num];
+
             /* Create thread*/
-            pthread_create(&thread_id[arg_num-1], NULL, &count, t_args);
-        
+            pthread_create(&thread_id[arg_num-1], NULL, &count, t_args[arg_num-1]);
+            
             arg_num++;
             
         }
@@ -80,18 +76,16 @@ int main (int argc, char *argv[]) {
             pthread_join(thread_id[i], NULL);
 
             /* Increment totals */
-            total_lines += t_args->lines[i];
-            total_chars += t_args->chars[i];
-            total_words += t_args->words[i];
-
+            total_lines += t_args[i]->lines;
+            total_chars += t_args[i]->chars;
+            total_words += t_args[i]->words;
+            
+            free(t_args[i]);
         }
 
-        /* Free all allocated memory*/
-        free(t_args->chars);
-        free(t_args->words);
-        free(t_args->lines);
-        free(t_args);
+        /* Free all allocated memory */
         free(thread_id);
+        free(t_args)
 
     }
 
@@ -110,7 +104,7 @@ void *count(void *file_and_args){
     /* Get the struct args*/
     struct thread_args *t_args = file_and_args; 
     char *filename = t_args->file;
-    int id = t_args->id;
+    
 
     char ch, next_ch;
     /*Variables used for counting lines words and chars*/
@@ -153,9 +147,9 @@ void *count(void *file_and_args){
     }
 
     /*Return the lines, words and chars in the file*/
-    t_args->lines[id] = lines;
-    t_args->words[id] = words;
-    t_args->chars[id] = chars;
+    t_args->lines = lines;
+    t_args->words = words;
+    t_args->chars = chars;
 
     return NULL;
 }
